@@ -17,11 +17,18 @@
 ## Imports
 ##########################################################################
 
+import argparse
+
 import time
 
 from producers import Producer
 from generators import Generator
 from signalers import Signaler
+
+
+HOST    = 'ec2-52-27-114-107.us-west-2.compute.amazonaws.com'
+HERTZ   = 60
+GENERATOR_LIST_LENGTH = 5
 
 ##########################################################################
 ## Classes
@@ -33,22 +40,28 @@ def setup_logging():
         level=logging.INFO
     )
 
+def main(args):
+    p = Producer(HOST)
+    g = Generator(GENERATOR_LIST_LENGTH)
+    try:
+        signaler = Signaler(args.topic, p, g, HERTZ)
+        signaler.start()
+    except KeyboardInterrupt:
+        print '\nExiting program...'
+
+    return 0
+
 
 ##########################################################################
 ## Execution
 ##########################################################################
 
 if __name__ == '__main__':
-    host = 'ec2-52-27-114-107.us-west-2.compute.amazonaws.com'
-    p = Producer(host)
-    g = Generator(5)
-    topic = 'pmu-sim-2'
-    signaler = Signaler(topic, p, g, 60)
+    parser = argparse.ArgumentParser(description="Data generator for MemSQL/Spark/Kafka architecture")
+    parser.add_argument("topic", help="kafka topic")
+    parser.add_argument("pmu", help="PMU identifier")
+    args = parser.parse_args()
 
-    try:
-        signaler.start()
-    except KeyboardInterrupt:
-        print '\nExiting program...'
-
+    exit(main(args))
 
 
