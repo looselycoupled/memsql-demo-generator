@@ -33,9 +33,6 @@ def setup_logging():
         level=logging.INFO
     )
 
-class Foo(object):
-    pass
-
 
 ##########################################################################
 ## Execution
@@ -43,10 +40,10 @@ class Foo(object):
 
 if __name__ == '__main__':
     host = 'ec2-52-27-114-107.us-west-2.compute.amazonaws.com'
-    port = '9092'
-    p = Producer(host, port)
+    p = Producer(host)
     g = Generator(5)
-    signaler = Signaler(p, g, 2)
+    topic = 'pmu-sim-1'
+    signaler = Signaler(topic, p, g, 30)
 
     try:
         signaler.start()
