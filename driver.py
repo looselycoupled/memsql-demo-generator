@@ -42,8 +42,8 @@ if __name__ == '__main__':
     host = 'ec2-52-27-114-107.us-west-2.compute.amazonaws.com'
     p = Producer(host)
     g = Generator(5)
-    topic = 'pmu-sim-1'
-    signaler = Signaler(topic, p, g, 30)
+    topic = 'pmu-sim-2'
+    signaler = Signaler(topic, p, g, 60)
 
     try:
         signaler.start()

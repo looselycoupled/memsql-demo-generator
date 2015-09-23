@@ -39,9 +39,30 @@ class Producer(object):
         connection = '{}:{}'.format(self.host, self.port)
         return KafkaClient(connection)
 
+    def started(self):
+        """
+        Logging will eventually go here
+        """
+        pass
+
+    def finished(self):
+        """
+        Logging will eventually go here
+        """
+
+    def _send(self, topic, message):
+        # payload = json.dumps(message)
+        return self._producer.send_messages(topic, message)
+
     def send(self, topic, message):
-        payload = json.dumps(message)
-        return self._producer.send_messages(topic, payload)
+        try:
+            self.started()
+            result = self._send(topic, message)
+            self.finished()
+        except:
+            raise
+        else:
+            return result
 
 
 ##########################################################################

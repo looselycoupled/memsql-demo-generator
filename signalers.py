@@ -40,7 +40,7 @@ class Signaler(object):
 
 
     def transform(self, payload):
-        return '{}    {}   {}'.format(time.time(), self.counter, payload)
+        return ','.join(map(str,payload))
 
 
     def wait(self):
