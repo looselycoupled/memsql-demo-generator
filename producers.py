@@ -51,7 +51,6 @@ class Producer(object):
         """
 
     def _send(self, topic, message):
-        # payload = json.dumps(message)
         return self._producer.send_messages(topic, message)
 
     def send(self, topic, message):

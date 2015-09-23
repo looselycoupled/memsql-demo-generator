@@ -40,6 +40,7 @@ class Signaler(object):
 
 
     def transform(self, payload):
+        payload[0] = '"{}"'.format(payload[0])
         return ','.join(map(str,payload))
 
 

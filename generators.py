@@ -26,8 +26,9 @@ import random
 
 class Generator(object):
 
-    def __init__(self, size):
-        self.values = random.sample(range(0,360), size)
+    def __init__(self, identifier, size):
+        self.values     = random.sample(range(0,360), size)
+        self.identifier = identifier
 
     def incr(self):
         for index, value in enumerate(self.values):
@@ -37,7 +38,7 @@ class Generator(object):
             self.values[index] = value
 
     def transform(self, data):
-        result = []
+        result = [self.identifier]
         for el in self.values:
             result.append(math.sin(math.radians(el)))
         return result

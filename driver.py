@@ -42,7 +42,7 @@ def setup_logging():
 
 def main(args):
     p = Producer(HOST)
-    g = Generator(GENERATOR_LIST_LENGTH)
+    g = Generator(args.pmu, GENERATOR_LIST_LENGTH)
     try:
         signaler = Signaler(args.topic, p, g, HERTZ)
         signaler.start()
